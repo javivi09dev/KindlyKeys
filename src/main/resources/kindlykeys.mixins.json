@@ -1,0 +1,17 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "me.javivi.kindlykeys.mixin",
+  "compatibilityLevel": "JAVA_8",
+  "refmap": "kindlykeys.refmap.json",
+  "mixins": [
+    "MixinPlayerEntity"
+  ],
+  "client": [
+    "MixinControlsListWidget",
+    "MixinKeyboardHelper"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

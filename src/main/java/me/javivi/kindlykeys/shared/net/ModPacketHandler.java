@@ -1,3 +1,4 @@
+// src/main/java/me/javivi/kindlykeys/shared/net/ModPacketHandler.java
 package me.javivi.kindlykeys.shared.net;
 
 import me.javivi.kindlykeys.shared.net.c2s.AvailableKeysC2S;
@@ -75,6 +76,7 @@ public class ModPacketHandler {
                 .consumerNetworkThread(AvailableKeysC2S::handle)
                 .add();
     }
+
     public static <Message> void sendToAllPlayers(Message message) {
         CHANNEL.send(PacketDistributor.ALL.noArg(), message);
     }

@@ -1,3 +1,4 @@
+// src/main/java/me/javivi/kindlykeys/shared/mixin/MixinKeyboardHelper.java
 package me.javivi.kindlykeys.shared.mixin;
 
 import me.javivi.kindlykeys.client.io.LockedKeysIO;
@@ -31,6 +32,5 @@ public class MixinKeyboardHelper {
         if (LockedKeysIO.INSTANCE.isKeyDisabled("extra.f3")) {
             cir.setReturnValue(false);
         }
-
     }
 }

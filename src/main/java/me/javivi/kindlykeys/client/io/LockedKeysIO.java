@@ -1,3 +1,4 @@
+// src/main/java/me/javivi/kindlykeys/client/io/LockedKeysIO.java
 package me.javivi.kindlykeys.client.io;
 
 import com.google.gson.Gson;
@@ -8,8 +9,9 @@ import java.nio.file.Path;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
-import me.javivi.kindlykeys.shared.KindlyKeysShared;
+import com.mojang.logging.LogUtils;
 import me.javivi.kindlykeys.shared.objects.IServerSideChecker;
+import org.slf4j.Logger;
 import net.minecraft.client.KeyMapping;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.player.LocalPlayer;
@@ -19,6 +21,8 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+
+import static me.javivi.kindlykeys.shared.KindlyKeysShared.LOGGER;
 
 @OnlyIn(Dist.CLIENT)
 public class LockedKeysIO {
@@ -62,12 +66,13 @@ public class LockedKeysIO {
         try {
             this.save();
         } catch (IOException e) {
-            KindlyKeysShared.LOGGER.error("Failed to save locked keys", e);
+            LOGGER.error("Failed to save locked keys", e);
         }
     }
 
     public void setDebugEnabled(boolean debugEnabled) {
         this.debugEnabled = debugEnabled;
+        LOGGER.debug("Debug mode set to: " + debugEnabled);
     }
 
     public boolean isDebugEnabled() {
@@ -76,6 +81,14 @@ public class LockedKeysIO {
 
     public Collection<String> getDisabledKeys() {
         return this.disabledKeys;
+    }
+    public void unlockAllKeys() {
+        this.disabledKeys.clear();
+        try {
+            this.save();
+        } catch (IOException e) {
+            LOGGER.error("Failed to save locked keys", e);
+        }
     }
 
     public static void cancelKeyIfRequired(int key, int scancode, CallbackInfo ci) {
@@ -126,5 +139,13 @@ public class LockedKeysIO {
             player.sendSystemMessage(Component.literal(message));
         }
     }
-}
 
+    // Static method to load keys, used by DistExecutor
+    public static void loadKeys() {
+        try {
+            INSTANCE.load();
+        } catch (IOException e) {
+            LOGGER.error("Failed to load locked keys", e);
+        }
+    }
+}

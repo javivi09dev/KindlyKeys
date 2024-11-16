@@ -1,7 +1,7 @@
+// src/main/java/me/javivi/kindlykeys/shared/net/s2c/KeyDebugS2C.java
 package me.javivi.kindlykeys.shared.net.s2c;
 
 import java.util.function.Supplier;
-import me.javivi.kindlykeys.client.io.LockedKeysIO;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraftforge.network.NetworkEvent;
 
@@ -20,10 +20,15 @@ public class KeyDebugS2C {
         buf.writeBoolean(this.debugEnabled);
     }
 
-    public boolean handle(Supplier<NetworkEvent.Context> contextSupplier) {
-        ((NetworkEvent.Context)contextSupplier.get()).enqueueWork(() -> {
-            LockedKeysIO.INSTANCE.setDebugEnabled(this.debugEnabled);
-        });
+    public static boolean handle(KeyDebugS2C message, Supplier<NetworkEvent.Context> contextSupplier) {
+        if (contextSupplier.get().getDirection().getReceptionSide().isClient()) {
+            me.javivi.kindlykeys.client.net.ClientHandler.handleKeyDebug(message, contextSupplier);
+        }
+        contextSupplier.get().setPacketHandled(true);
         return true;
+    }
+
+    public boolean isDebugEnabled() {
+        return debugEnabled;
     }
 }

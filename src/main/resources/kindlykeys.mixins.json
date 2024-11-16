@@ -1,7 +1,7 @@
 {
   "required": true,
   "minVersion": "0.8",
-  "package": "me.javivi.kindlykeys.mixin",
+  "package": "me.javivi.kindlykeys.shared.mixin",
   "compatibilityLevel": "JAVA_8",
   "refmap": "kindlykeys.refmap.json",
   "mixins": [

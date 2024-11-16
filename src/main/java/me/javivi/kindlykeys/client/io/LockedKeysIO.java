@@ -26,7 +26,7 @@ public class LockedKeysIO {
     private static final Path CONFIG_PATH = Path.of("config", "locked_keys.json");
     private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
     private Set<String> disabledKeys = new HashSet<>();
-    private boolean debugEnabled = false;
+    private boolean debugEnabled = true;
 
     public LockedKeysIO() {}
 

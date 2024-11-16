@@ -36,43 +36,43 @@ public class ModPacketHandler {
         CHANNEL.messageBuilder(ChangePerspectiveS2C.class, nextId(), NetworkDirection.PLAY_TO_CLIENT)
                 .decoder(ChangePerspectiveS2C::new)
                 .encoder(ChangePerspectiveS2C::toBytes)
-                .consumer(ChangePerspectiveS2C::handle)
+                .consumerNetworkThread(ChangePerspectiveS2C::handle)
                 .add();
 
         CHANNEL.messageBuilder(LockKeyS2C.class, nextId(), NetworkDirection.PLAY_TO_CLIENT)
                 .decoder(LockKeyS2C::new)
                 .encoder(LockKeyS2C::toBytes)
-                .consumer(LockKeyS2C::handle)
+                .consumerNetworkThread(LockKeyS2C::handle)
                 .add();
 
         CHANNEL.messageBuilder(KeyDebugS2C.class, nextId(), NetworkDirection.PLAY_TO_CLIENT)
                 .decoder(KeyDebugS2C::new)
                 .encoder(KeyDebugS2C::toBytes)
-                .consumer(KeyDebugS2C::handle)
+                .consumerNetworkThread(KeyDebugS2C::handle)
                 .add();
 
         CHANNEL.messageBuilder(DisabledKeyListRequestS2C.class, nextId(), NetworkDirection.PLAY_TO_CLIENT)
                 .decoder(DisabledKeyListRequestS2C::new)
                 .encoder(DisabledKeyListRequestS2C::toBytes)
-                .consumer(DisabledKeyListRequestS2C::handle)
+                .consumerNetworkThread(DisabledKeyListRequestS2C::handle)
                 .add();
 
         CHANNEL.messageBuilder(SendDisabledKeysC2S.class, nextId(), NetworkDirection.PLAY_TO_SERVER)
                 .decoder(SendDisabledKeysC2S::new)
                 .encoder(SendDisabledKeysC2S::toBytes)
-                .consumer(SendDisabledKeysC2S::handle)
+                .consumerNetworkThread(SendDisabledKeysC2S::handle)
                 .add();
 
         CHANNEL.messageBuilder(AvailableKeyListRequestS2C.class, nextId(), NetworkDirection.PLAY_TO_CLIENT)
                 .decoder(AvailableKeyListRequestS2C::new)
                 .encoder(AvailableKeyListRequestS2C::toBytes)
-                .consumer(AvailableKeyListRequestS2C::handle)
+                .consumerNetworkThread(AvailableKeyListRequestS2C::handle)
                 .add();
 
         CHANNEL.messageBuilder(AvailableKeysC2S.class, nextId(), NetworkDirection.PLAY_TO_SERVER)
                 .decoder(AvailableKeysC2S::new)
                 .encoder(AvailableKeysC2S::toBytes)
-                .consumer(AvailableKeysC2S::handle)
+                .consumerNetworkThread(AvailableKeysC2S::handle)
                 .add();
     }
     public static <Message> void sendToAllPlayers(Message message) {
